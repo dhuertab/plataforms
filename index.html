@@ -7,10 +7,12 @@
     <style>
       html, body { height: 100%; margin: 0; background: #0e0f13; color: #fff; font-family: system-ui, sans-serif; }
       #game { display: block; width: 100vw; height: 100vh; touch-action: none; }
+      #flip { position: fixed; right: 14px; top: 14px; z-index: 10; padding: 10px 12px; border-radius: 10px; border: 0; background: rgba(255,255,255,0.14); color: #fff; font-weight: 600; backdrop-filter: blur(6px); }
     </style>
   </head>
   <body>
     <canvas id="game"></canvas>
+    <button id="flip" type="button">Flip</button>
     <script type="module" src="src/game.js"></script>
   </body>
 </html>

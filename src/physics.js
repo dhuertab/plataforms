@@ -7,6 +7,8 @@ export function resolveCollisions(entity, platforms, ctx) {
   entity.onGround = false;
   entity.touchGround = false;
   entity.touchCeiling = false;
+  entity.touchAnyFloor = false;
+  entity.touchAnyCeiling = false;
   entity.touchLeftWall = false;
   entity.touchRightWall = false;
 
@@ -30,7 +32,9 @@ export function resolveCollisions(entity, platforms, ctx) {
       if (vyBefore > 0) entity.y = p.y - entity.h; else entity.y = p.y + p.h;
       entity.vy = 0;
       if (p.kind === 'ground' && vyBefore > 0) entity.touchGround = true;
-      if (p.kind === 'ceiling' && vyBefore < 0) entity.touchCeiling = true;
+      if (vyBefore < 0) entity.touchCeiling = true;
+      if ((p.kind === 'ground' || p.kind === 'platform') && vyBefore > 0) entity.touchAnyFloor = true;
+      if ((p.kind === 'ceiling' || p.kind === 'platform') && vyBefore < 0) entity.touchAnyCeiling = true;
       if (ctx.gravDir.y === 1 && vyBefore > 0) entity.onGround = true;
       if (ctx.gravDir.y === -1 && vyBefore < 0) entity.onGround = true;
     }
@@ -71,4 +75,3 @@ export function applyCarriers(player, platforms, ctx) {
     }
   }
 }
-

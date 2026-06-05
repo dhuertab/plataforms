@@ -3,9 +3,12 @@ import { dist, rectsIntersect } from './math.js';
 export function createProgression() {
   let score = 0;
   let coinsLeft = 0;
+  let runLevel = 1;
+  const maxLevel = 50;
 
   function resetRun() {
     score = 0;
+    runLevel = 1;
   }
 
   function resetLevel(level) {
@@ -35,15 +38,23 @@ export function createProgression() {
 
   function update(level, player) {
     updateCoins(level, player);
-    return { levelComplete: updateDoor(level, player) };
+    const levelComplete = updateDoor(level, player);
+    const gameOver = levelComplete && runLevel >= maxLevel;
+    return { levelComplete, gameOver };
+  }
+
+  function advanceLevel() {
+    runLevel = Math.min(maxLevel, runLevel + 1);
   }
 
   return {
     get score() { return score; },
     get coinsLeft() { return coinsLeft; },
+    get runLevel() { return runLevel; },
+    get maxLevel() { return maxLevel; },
     resetRun,
     resetLevel,
-    update
+    update,
+    advanceLevel
   };
 }
-

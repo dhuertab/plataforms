@@ -47,7 +47,7 @@ export function createRenderer(ctx) {
   }
 
   function drawPlayer(player) {
-    drawRoundedRect(ctx, player.x, player.y, player.w, player.h, 6, '#90caf9');
+    drawRoundedRect(ctx, player.x, player.y, player.w, player.h, 6, player.color || '#90caf9');
   }
 
   function drawHUD(score) {
@@ -56,6 +56,15 @@ export function createRenderer(ctx) {
     ctx.textAlign = 'left';
     ctx.fillText('Plataforms', 12, 24);
     ctx.fillText('Puntos: ' + score, 12, 44);
+  }
+
+  function drawRunLevel(vw, vh, runLevel, maxLevel) {
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,255,255,0.10)';
+    ctx.font = '700 44px system-ui, sans-serif';
+    ctx.fillText('NIVEL ' + runLevel + '/' + maxLevel, vw / 2, vh - 80);
+    ctx.restore();
   }
 
   function drawOverlay(vw, vh, text, sub) {
@@ -69,6 +78,5 @@ export function createRenderer(ctx) {
     ctx.fillText(sub, vw / 2, vh / 2 + 24);
   }
 
-  return { clear, drawLevel, drawPlayer, drawHUD, drawOverlay };
+  return { clear, drawLevel, drawPlayer, drawHUD, drawRunLevel, drawOverlay };
 }
-
