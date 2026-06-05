@@ -146,7 +146,7 @@ function tick() {
 
   if (state === 'menu') {
     renderer.drawLevel(level);
-    renderer.drawOverlay(vw, vh, 'Pulsa salto para empezar', 'Suelo/techo: ← →. Paredes: ↑ ↓. Salto: Espacio. Pantalla: izquierda/derecha/salto');
+    renderer.drawOverlay(vw, vh, 'Pulsa salto para empezar', 'Suelo/techo: ← →. Paredes: ↑ ↓. Salto: Espacio. Flip gravedad: G o botón Flip. Pantalla: izquierda/derecha/salto');
     if (input.jump) state = 'playing';
   } else if (state === 'playing') {
     const flipNow = !!(input.flip || flipRequested);
