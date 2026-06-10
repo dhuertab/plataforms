@@ -39,6 +39,7 @@ const input = inputManager.input;
 const flipButton = document.getElementById('flip');
 let flipRequested = false;
 let prevFlip = false;
+let prevAdvance = false;
 if (flipButton) {
   flipButton.addEventListener('pointerdown', e => {
     flipRequested = true;
@@ -146,13 +147,21 @@ function tick() {
 
   if (state === 'menu') {
     renderer.drawLevel(level);
-    renderer.drawOverlay(vw, vh, 'Pulsa salto para empezar', 'Suelo/techo: ← →. Paredes: ↑ ↓. Salto: Espacio. Flip gravedad: G o botón Flip. Pantalla: izquierda/derecha/salto');
+    renderer.drawOverlay(vw, vh, 'Pulsa salto para empezar', 'Mover: WASD o flechas. Paredes: ↑ ↓. Salto: Espacio. Flip gravedad: G o botón Flip. Truco pasar nivel: P. Pantalla: izquierda/derecha/salto');
     if (input.jump) state = 'playing';
   } else if (state === 'playing') {
     const flipNow = !!(input.flip || flipRequested);
     if (flipNow && !prevFlip) flipGravityAndColor();
     prevFlip = flipNow;
     flipRequested = false;
+
+    const advanceNow = !!input.advance;
+    if (advanceNow && !prevAdvance) {
+      if (progression.runLevel >= progression.maxLevel) state = 'gameover';
+      else { progression.advanceLevel(); resetLevel(0); }
+    }
+    prevAdvance = advanceNow;
+
     updatePlatforms(level, ctx);
     updatePlayer(level);
     updateReds(level, player, ctx, { MOVE, G, MAX_VX, MAX_VY });

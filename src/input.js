@@ -1,5 +1,5 @@
 export function createInput(canvas, getViewport) {
-  const input = { left: false, right: false, up: false, down: false, jump: false, flip: false, jumpPressed: false };
+  const input = { left: false, right: false, up: false, down: false, jump: false, flip: false, advance: false, jumpPressed: false };
   const keys = new Set();
   let touches = {};
   const touchInput = { left: false, right: false, jump: false };
@@ -42,6 +42,7 @@ export function createInput(canvas, getViewport) {
     if (['arrowup', 'w'].includes(k)) keys.add('up');
     if (['arrowdown', 's'].includes(k)) keys.add('down');
     if (['g'].includes(k)) keys.add('flip');
+    if (['p'].includes(k)) keys.add('advance');
     if ([' ', 'spacebar'].includes(k)) keys.add('jump');
   }
 
@@ -52,6 +53,7 @@ export function createInput(canvas, getViewport) {
     if (['arrowup', 'w'].includes(k)) keys.delete('up');
     if (['arrowdown', 's'].includes(k)) keys.delete('down');
     if (['g'].includes(k)) keys.delete('flip');
+    if (['p'].includes(k)) keys.delete('advance');
     if ([' ', 'spacebar'].includes(k)) keys.delete('jump');
   }
 
@@ -69,13 +71,14 @@ export function createInput(canvas, getViewport) {
     input.down = !!keys.has('down');
     input.jump = !!(keys.has('jump') || touchInput.jump);
     input.flip = !!keys.has('flip');
+    input.advance = !!keys.has('advance');
   }
 
   function reset() {
     keys.clear();
     touches = {};
     touchInput.left = false; touchInput.right = false; touchInput.jump = false;
-    input.left = false; input.right = false; input.up = false; input.down = false; input.jump = false; input.flip = false; input.jumpPressed = false;
+    input.left = false; input.right = false; input.up = false; input.down = false; input.jump = false; input.flip = false; input.advance = false; input.jumpPressed = false;
   }
 
   return { input, update, reset };
